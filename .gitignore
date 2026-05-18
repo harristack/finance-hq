@@ -1,0 +1,15 @@
+data/
+__pycache__/
+*.db
+*.pyc
+*.py
+*.command
+*.jsx
+.claude/
+agent-brief.md
+function-reference.md
+finance-hq.html
+price-control-dash/
+forecast.py
+data_capture.py
+intelligence.py
