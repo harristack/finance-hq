@@ -2016,7 +2016,6 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
               <button onclick="cvExport('flow_log')"   class="cv-export-btn">Flow Log</button>
               <button onclick="cvExport('curve_snapshots')" class="cv-export-btn">Snapshots</button>
               <span id="cv-export-status" style="margin-left:4px;color:rgba(255,255,255,0.22)"></span>
-              <button onclick="cvTkCloseEmail()" class="cv-export-btn" style="margin-left:10px;background:rgba(0,168,255,0.08);border-color:rgba(0,168,255,0.25);color:rgba(0,168,255,0.75)">TK Close Email</button>
             </div>
 
             <!-- JUMP BAR (JS-rendered) -->
@@ -2065,6 +2064,9 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
                     <button class="cv-rp-btn cv-rp-btn-pri" onclick="cvParsePaste()">⬤ Load</button>
                     <button class="cv-rp-btn" onclick="cvClearNyc()">Clear All</button>
                     <span class="cv-paste-fb" id="cv-paste-fb"></span>
+                  </div>
+                  <div style="margin-top:8px">
+                    <button class="cv-rp-btn" onclick="cvTkCloseEmail()" style="background:rgba(0,168,255,0.08);border-color:rgba(0,168,255,0.25);color:rgba(0,168,255,0.8);width:100%">TK Close Email</button>
                   </div>
                 </div>
                 <div class="cv-rp-sec">
@@ -9434,49 +9436,55 @@ function brkSaveSettings(){
 
 // ── TOKYO CLOSE EMAIL ─────────────────────────────────────────────────────────
 function cvTkCloseEmail(){
-  if(!cvBuilt._lastRows)cvRecalc();
-  var spot=parseFloat(document.getElementById('cv-spot').value)||143.50;
-  var tona=parseFloat(document.getElementById('cv-tona').value)||0.492;
-  var sofr=parseFloat(document.getElementById('cv-sofr').value)||4.330;
+  try {
+    cvRecalc();
+  } catch(e){}
+  try {
+    var spot=parseFloat((document.getElementById('cv-spot')||{}).value)||143.50;
+    var tona=parseFloat((document.getElementById('cv-tona')||{}).value)||0.492;
+    var sofr=parseFloat((document.getElementById('cv-sofr')||{}).value)||4.330;
 
-  var now=new Date();
-  var jstMs=now.getTime()+now.getTimezoneOffset()*60000+9*3600000;
-  var jst=new Date(jstMs);
-  var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var dStr=String(jst.getDate()).padStart(2,'0')+'-'+MO[jst.getMonth()]+'-'+String(jst.getFullYear()).slice(2);
-  var tStr=String(jst.getHours()).padStart(2,'0')+':'+String(jst.getMinutes()).padStart(2,'0')+' JST';
+    var now=new Date();
+    var jstMs=now.getTime()+now.getTimezoneOffset()*60000+9*3600000;
+    var jst=new Date(jstMs);
+    var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var dStr=String(jst.getDate()).padStart(2,'0')+'-'+MO[jst.getMonth()]+'-'+String(jst.getFullYear()).slice(2);
+    var tStr=String(jst.getHours()).padStart(2,'0')+':'+String(jst.getMinutes()).padStart(2,'0')+' JST';
 
-  var SHOW=['ON','TN','SN','1W','2W','3W','1M','2M','3M','6M','9M','12M','18M','2Y'];
-  var seen={},rows=[];
-  (cvBuilt._lastRows||[]).forEach(function(r){if(!seen[r.key]&&SHOW.indexOf(r.key)!==-1){seen[r.key]=1;rows.push(r);}});
-  rows.sort(function(a,b){return SHOW.indexOf(a.key)-SHOW.indexOf(b.key);});
+    var SHOW=['ON','TN','SN','1W','2W','3W','1M','2M','3M','6M','9M','12M','18M','2Y'];
+    var src_rows=(cvBuilt._lastRows&&cvBuilt._lastRows.length)?cvBuilt._lastRows:(cvBuilt.std||[]);
+    var seen={},rows=[];
+    src_rows.forEach(function(r){if(r&&r.key&&!seen[r.key]&&SHOW.indexOf(r.key)!==-1){seen[r.key]=1;rows.push(r);}});
+    rows.sort(function(a,b){return SHOW.indexOf(a.key)-SHOW.indexOf(b.key);});
 
-  function fp(v){if(v==null)return '     —   ';return ((v>=0?'+':'')+v.toFixed(3)).padStart(9);}
-  function or_(v){if(v==null)return '     —   ';return v.toFixed(3).padStart(9);}
+    function fp(v){if(v==null||isNaN(v))return '    —    ';return ((v>=0?'+':'')+v.toFixed(3)).padStart(9);}
+    function or_(v){if(v==null||isNaN(v))return '    —    ';return v.toFixed(3).padStart(9);}
 
-  var lines=[
-    'USD/JPY Forward Points — Tokyo Close',
-    dStr+'  '+tStr,
-    '',
-    'Spot:  '+spot.toFixed(3),
-    'TONA:  '+tona.toFixed(3)+'%    SOFR:  '+sofr.toFixed(3)+'%',
-    '',
-    'Tenor  Val Date       Bid       Offer       Mid   Outright',
-    '─────────────────────────────────────────────────────────────'
-  ];
-  rows.forEach(function(r){
-    if(r.liveMid==null&&r.bid==null&&r.offer==null)return;
-    var vd=r.far?cvFmtDisplay(r.far):'—';
-    var src=r.source&&r.source!=='MKT'?'  ['+r.source+']':'';
-    lines.push(r.label.padEnd(6)+' '+vd.padEnd(12)+fp(r.bid)+'  '+fp(r.offer)+'  '+fp(r.liveMid)+'  '+or_(r.outright)+src);
-  });
-  lines.push('');
-  lines.push('--');
+    var lines=[
+      'USD/JPY Forward Points — Tokyo Close',
+      dStr+'  '+tStr,
+      '',
+      'Spot:  '+spot.toFixed(3),
+      'TONA:  '+tona.toFixed(3)+'%    SOFR:  '+sofr.toFixed(3)+'%',
+      '',
+      'Tenor  Val Date       Bid       Offer       Mid   Outright',
+      '--------------------------------------------------------------'
+    ];
+    rows.forEach(function(r){
+      var mid=r.liveMid!=null?r.liveMid:(r.mktMid!=null?r.mktMid:null);
+      if(mid==null&&r.bid==null&&r.offer==null)return;
+      var vd=(r.far instanceof Date)?cvFmtDisplay(r.far):'—';
+      var tag=r.source&&r.source!=='MKT'?'  ['+r.source+']':'';
+      lines.push((r.label||r.key).padEnd(6)+' '+vd.padEnd(12)+fp(r.bid)+'  '+fp(r.offer)+'  '+fp(mid)+'  '+or_(r.outright)+tag);
+    });
+    lines.push('');
+    lines.push('--');
 
-  var subj='USD/JPY Fwd Pts — Tokyo Close | '+dStr+' | Spot '+spot.toFixed(3);
-  document.getElementById('tkce-subject').value=subj;
-  document.getElementById('tkce-body').value=lines.join('\n');
-  document.getElementById('tkce-overlay').style.display='flex';
+    var subj='USD/JPY Fwd Pts — Tokyo Close | '+dStr+' | Spot '+spot.toFixed(3);
+    document.getElementById('tkce-subject').value=subj;
+    document.getElementById('tkce-body').value=lines.join('\n');
+    document.getElementById('tkce-overlay').style.display='flex';
+  } catch(e){ console.error('[TK Close Email]',e); alert('Error: '+e.message); }
 }
 function tkceOpenMail(){
   var s=encodeURIComponent(document.getElementById('tkce-subject').value||'');
