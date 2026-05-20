@@ -1739,26 +1739,29 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
 .pcd-s-btn-add:hover { background:rgba(56,189,248,.15); }
 
 /* strip calculator */
-.sc-wrap { padding:10px 12px; }
-.sc-board-hdr { display:flex; align-items:center; justify-content:space-between; padding:5px 10px; background:rgba(0,168,255,0.04); border-bottom:1px solid rgba(0,168,255,0.1); cursor:pointer; user-select:none; }
-.sc-board-hdr:hover { background:rgba(0,168,255,0.07); }
-.sc-board-title { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(0,168,255,0.65); }
-.sc-info-bar { font-family:'IBM Plex Mono',monospace; font-size:9px; color:rgba(255,255,255,0.28); letter-spacing:0.06em; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
-.sc-chart-box { background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.06); border-radius:6px; margin-bottom:10px; overflow:hidden; }
-.sc-legs-tbl { width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:11px; margin-bottom:10px; }
-.sc-legs-tbl th { color:rgba(255,255,255,0.28); font-size:8.5px; letter-spacing:0.09em; text-transform:uppercase; padding:4px 8px; text-align:right; border-bottom:1px solid rgba(255,255,255,0.06); }
+.sc-wrap { padding:8px 12px 10px; }
+.sc-board-hdr { display:flex; align-items:center; justify-content:space-between; padding:6px 12px; background:rgba(0,168,255,0.06); border-bottom:1px solid rgba(0,168,255,0.15); cursor:pointer; user-select:none; }
+.sc-board-hdr:hover { background:rgba(0,168,255,0.1); }
+.sc-board-title { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(0,168,255,0.9); font-weight:600; }
+.sc-status { font-family:'IBM Plex Mono',monospace; font-size:10px; color:rgba(255,255,255,0.45); margin-bottom:6px; min-height:16px; }
+.sc-status.sc-status-pending { color:rgba(0,168,255,0.9); font-weight:600; }
+.sc-chart-box { background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:6px; margin-bottom:8px; overflow:hidden; }
+.sc-legs-tbl { width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12px; margin-bottom:8px; }
+.sc-legs-tbl th { color:rgba(255,255,255,0.35); font-size:9px; letter-spacing:0.09em; text-transform:uppercase; padding:5px 10px; text-align:right; border-bottom:1px solid rgba(255,255,255,0.08); background:rgba(0,0,0,0.2); }
 .sc-legs-tbl th:first-child { text-align:left; }
-.sc-legs-tbl td { padding:5px 8px; border-bottom:1px solid rgba(255,255,255,0.04); text-align:right; }
-.sc-legs-tbl td:first-child { text-align:left; }
-.sc-legs-tbl tr:hover td { background:rgba(255,255,255,0.02); }
-.sc-imp-tag { background:rgba(251,191,36,0.12); border:1px solid rgba(251,191,36,0.25); color:rgba(251,191,36,0.8); border-radius:3px; font-size:8px; padding:1px 5px; }
-.sc-live-tag { color:rgba(52,212,119,0.65); font-size:8.5px; }
-.sc-manual-tag { color:rgba(255,255,255,0.28); font-size:8.5px; }
-.sc-btn-exec { background:rgba(52,212,119,0.1); border:1px solid rgba(52,212,119,0.28); color:rgba(52,212,119,0.85); border-radius:4px; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.07em; text-transform:uppercase; padding:6px 16px; cursor:pointer; transition:all 0.15s; }
-.sc-btn-exec:hover { background:rgba(52,212,119,0.18); }
-.sc-btn-sm { background:transparent; border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.32); border-radius:4px; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:5px 12px; cursor:pointer; transition:all 0.12s; }
-.sc-btn-sm:hover { color:rgba(255,255,255,0.6); background:rgba(255,255,255,0.06); }
-.sc-empty { font-family:'IBM Plex Mono',monospace; font-size:10px; color:rgba(255,255,255,0.18); padding:10px 0; }
+.sc-legs-tbl td { padding:6px 10px; border-bottom:1px solid rgba(255,255,255,0.05); text-align:right; font-size:12px; }
+.sc-legs-tbl td:first-child { text-align:left; color:rgba(255,255,255,0.9); font-size:12px; letter-spacing:0.05em; }
+.sc-legs-tbl tr.sc-row-impl td { background:rgba(251,191,36,0.04); }
+.sc-legs-tbl tr.sc-row-impl td:first-child { color:rgba(251,191,36,0.9); }
+.sc-legs-tbl tr:hover td { background:rgba(255,255,255,0.03); }
+.sc-imp-tag { background:rgba(251,191,36,0.18); border:1px solid rgba(251,191,36,0.35); color:rgba(251,191,36,0.95); border-radius:3px; font-size:9px; padding:1px 6px; font-weight:600; }
+.sc-live-tag { color:rgba(52,212,119,0.8); font-size:9px; }
+.sc-manual-tag { color:rgba(255,255,255,0.28); font-size:9px; }
+.sc-btn-exec { background:rgba(52,212,119,0.12); border:1px solid rgba(52,212,119,0.35); color:rgba(52,212,119,0.95); border-radius:4px; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.07em; text-transform:uppercase; padding:7px 18px; cursor:pointer; transition:all 0.15s; }
+.sc-btn-exec:hover { background:rgba(52,212,119,0.22); }
+.sc-btn-sm { background:transparent; border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.4); border-radius:4px; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:5px 12px; cursor:pointer; transition:all 0.12s; }
+.sc-btn-sm:hover { color:rgba(255,255,255,0.75); background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.25); }
+.sc-empty { font-family:'IBM Plex Mono',monospace; font-size:11px; color:rgba(255,255,255,0.25); padding:8px 0; }
 
 
 /* ═══════════════════════════════════════
@@ -2622,11 +2625,9 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
               </div>
               <div id="sc-board-body">
                 <div class="sc-wrap" style="padding:6px 10px">
-                  <div class="sc-info-bar" style="margin-bottom:5px">
-                    <span>Click two tenors to define a fwd/fwd leg — prices live from board.</span>
-                  </div>
+                  <div id="sc-status-bar" class="sc-status">Click any tenor to start a fwd/fwd leg</div>
                   <div class="sc-chart-box" style="margin-bottom:6px">
-                    <svg id="sc-svg" style="width:100%;height:130px;display:block"></svg>
+                    <svg id="sc-svg" style="width:100%;height:180px;display:block"></svg>
                   </div>
                   <div id="sc-legs-wrap"></div>
                   <div id="sc-exec-bar"></div>
@@ -9585,7 +9586,7 @@ function scRenderSvg(){
   var svg=document.getElementById('sc-svg');if(!svg)return;
   var W=svg.parentElement?svg.parentElement.clientWidth:400;
   if(W<10)W=400;
-  var H=150,nodeY=H-24,nodeR=13,pad=32;
+  var H=180,nodeY=H-32,nodeR=17,pad=36;
   var N=SC_TENORS.length;
   var step=(W-pad*2)/(N-1);
   var pos={};
@@ -9595,25 +9596,34 @@ function scRenderSvg(){
   var allLegs=SC.legs.concat(scSolveChain());
   var h='';
 
-  // Base line
-  h+='<line x1="'+pad+'" y1="'+nodeY+'" x2="'+(W-pad)+'" y2="'+nodeY+'" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>';
+  // Background base line
+  h+='<line x1="'+pad+'" y1="'+nodeY+'" x2="'+(W-pad)+'" y2="'+nodeY+'" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>';
 
   // Arcs
-  allLegs.forEach(function(leg){
+  allLegs.forEach(function(leg,li){
     var p1=pos[leg.near],p2=pos[leg.far];if(!p1||!p2)return;
     var mx=(p1.x+p2.x)/2;
     var span=p2.x-p1.x;
-    var arcH=Math.min(60,span*0.38+10);
+    var arcH=Math.min(110,span*0.42+16);
     var cy=nodeY-arcH;
-    var col=leg.implied?'rgba(251,191,36,0.75)':'rgba(0,168,255,0.85)';
-    var dash=leg.implied?'stroke-dasharray="5,3"':'';
+    var col=leg.implied?'#fbbf24':'#00a8ff';
+    var fillCol=leg.implied?'rgba(251,191,36,0.05)':'rgba(0,168,255,0.05)';
+    var dash=leg.implied?'stroke-dasharray="6,4"':'';
+    var sw=leg.implied?1.8:2.2;
+
+    // Arc path
     var d='M '+p1.x+' '+nodeY+' Q '+mx+' '+cy+' '+p2.x+' '+nodeY;
-    h+='<path d="'+d+'" stroke="'+col+'" stroke-width="1.5" fill="none" '+dash+'/>';
+    h+='<path d="'+d+'" stroke="'+col+'" stroke-width="'+sw+'" fill="none" opacity="0.85" '+dash+'/>';
+
+    // Label background + text
     var bidStr=leg.bid!=null?(leg.bid>=0?'+':'')+leg.bid.toFixed(2):'—';
     var offStr=leg.offer!=null?(leg.offer>=0?'+':'')+leg.offer.toFixed(2):'—';
-    var labelY=cy-2;
-    h+='<text x="'+mx+'" y="'+(labelY-10)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7.5" fill="'+col+'">'+(leg.implied?'▷ ':'')+leg.near+'/'+leg.far+'</text>';
-    h+='<text x="'+mx+'" y="'+labelY+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="rgba(255,255,255,0.72)">'+bidStr+' / '+offStr+'</text>';
+    var legLabel=leg.near+'/'+leg.far+(leg.implied?' ▷':'');
+    var labelY=cy-4;
+    var bgH=36,bgW=Math.max(80,legLabel.length*6.5+8);
+    h+='<rect x="'+(mx-bgW/2)+'" y="'+(labelY-28)+'" width="'+bgW+'" height="'+bgH+'" rx="3" fill="rgba(10,14,28,0.82)" stroke="'+col+'" stroke-width="0.8" opacity="0.9"/>';
+    h+='<text x="'+mx+'" y="'+(labelY-14)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="'+col+'" font-weight="600">'+legLabel+'</text>';
+    h+='<text x="'+mx+'" y="'+labelY+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="rgba(255,255,255,0.88)">'+bidStr+' / '+offStr+'</text>';
   });
 
   // Nodes
@@ -9621,14 +9631,33 @@ function scRenderSvg(){
     var p=pos[t];
     var isPend=SC.pending===t;
     var inLeg=SC.legs.some(function(l){return l.near===t||l.far===t;});
-    var nodeFill=isPend?'rgba(0,168,255,0.28)':inLeg?'rgba(0,168,255,0.1)':'rgba(255,255,255,0.04)';
-    var nodeStr=isPend?'rgba(0,168,255,1)':inLeg?'rgba(0,168,255,0.5)':'rgba(255,255,255,0.18)';
-    var sw=isPend?2:1.5;
-    h+='<circle cx="'+p.x+'" cy="'+nodeY+'" r="'+nodeR+'" fill="'+nodeFill+'" stroke="'+nodeStr+'" stroke-width="'+sw+'" style="cursor:pointer" onclick="scNodeClick(\''+t+'\')" />';
-    h+='<text x="'+p.x+'" y="'+(nodeY+3.5)+'" text-anchor="middle" dominant-baseline="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="rgba(255,255,255,'+(inLeg||isPend?'0.9':'0.4')+')" style="pointer-events:none">'+t+'</text>';
+    var inImpl=!inLeg&&allLegs.some(function(l){return l.implied&&(l.near===t||l.far===t);});
+    var nodeFill=isPend?'rgba(0,168,255,0.45)':inLeg?'rgba(0,168,255,0.18)':inImpl?'rgba(251,191,36,0.1)':'rgba(255,255,255,0.05)';
+    var nodeStr=isPend?'#00a8ff':inLeg?'rgba(0,168,255,0.8)':inImpl?'rgba(251,191,36,0.5)':'rgba(255,255,255,0.22)';
+    var sw=isPend?3:inLeg?2:1.5;
+    var textCol=isPend?'#fff':inLeg?'rgba(255,255,255,0.95)':inImpl?'rgba(251,191,36,0.85)':'rgba(255,255,255,0.45)';
+    var fontSize=inLeg||isPend?'9.5':'9';
+    h+='<circle cx="'+p.x+'" cy="'+nodeY+'" r="'+nodeR+'" fill="'+nodeFill+'" stroke="'+nodeStr+'" stroke-width="'+sw+'" style="cursor:pointer;transition:all 0.1s" onclick="scNodeClick(\''+t+'\')" />';
+    h+='<text x="'+p.x+'" y="'+(nodeY+3.5)+'" text-anchor="middle" dominant-baseline="middle" font-family="IBM Plex Mono,monospace" font-size="'+fontSize+'" fill="'+textCol+'" font-weight="'+(inLeg||isPend?'700':'400')+'" style="pointer-events:none">'+t+'</text>';
   });
 
+  svg.setAttribute('height',H);
   svg.innerHTML=h;
+
+  // Update status bar
+  var st=document.getElementById('sc-status-bar');
+  if(st){
+    if(SC.pending){
+      st.textContent=SC.pending+' selected  →  click the far tenor to complete the leg';
+      st.className='sc-status sc-status-pending';
+    } else if(SC.legs.length===0){
+      st.textContent='Click any tenor to start a fwd/fwd leg';
+      st.className='sc-status';
+    } else {
+      st.textContent=SC.legs.length+' leg'+(SC.legs.length>1?'s':'')+' — click two tenors to add more';
+      st.className='sc-status';
+    }
+  }
 }
 
 function scRenderLegs(){
@@ -9648,16 +9677,17 @@ function scRenderLegs(){
 
   function fmt(v){if(v==null||isNaN(v))return '<span style="color:rgba(255,255,255,0.2)">—</span>';return (v>=0?'+':'')+v.toFixed(3);}
 
-  var h='<table class="sc-legs-tbl"><thead><tr><th>Leg</th><th>Bid</th><th>Offer</th><th>Mid</th><th>Source</th><th></th></tr></thead><tbody>';
+  var h='<table class="sc-legs-tbl"><thead><tr><th>Leg</th><th>Bid</th><th>Offer</th><th>Mid</th><th></th><th></th></tr></thead><tbody>';
   allLegs.forEach(function(leg){
     var mid=(leg.bid!=null&&leg.offer!=null)?(leg.bid+leg.offer)/2:null;
-    var srcTag=leg.implied?'<span class="sc-imp-tag">implied</span>':leg.source==='live'?'<span class="sc-live-tag">live</span>':'<span class="sc-manual-tag">—</span>';
-    var rmBtn=leg.implied?'':'<span style="cursor:pointer;color:rgba(255,255,255,0.2);font-size:15px;line-height:1" onclick="scRemoveLeg(\''+leg.near+'\',\''+leg.far+'\')">×</span>';
-    h+='<tr>'
-      +'<td style="color:rgba(255,255,255,0.75)">'+leg.near+'×'+leg.far+'</td>'
-      +'<td style="color:rgba(248,113,113,0.85)">'+fmt(leg.bid)+'</td>'
-      +'<td style="color:rgba(52,212,119,0.85)">'+fmt(leg.offer)+'</td>'
-      +'<td style="color:rgba(255,255,255,0.5)">'+fmt(mid)+'</td>'
+    var srcTag=leg.implied?'<span class="sc-imp-tag">implied</span>':leg.source==='live'?'<span class="sc-live-tag">● live</span>':'<span class="sc-manual-tag">manual</span>';
+    var rmBtn=leg.implied?'':'<span style="cursor:pointer;color:rgba(255,255,255,0.25);font-size:16px;line-height:1;padding:0 4px" onclick="scRemoveLeg(\''+leg.near+'\',\''+leg.far+'\')">×</span>';
+    var rowCls=leg.implied?'sc-row-impl':'';
+    h+='<tr class="'+rowCls+'">'
+      +'<td>'+leg.near+'×'+leg.far+'</td>'
+      +'<td style="color:rgba(248,113,113,0.9);font-weight:600">'+fmt(leg.bid)+'</td>'
+      +'<td style="color:rgba(52,212,119,0.9);font-weight:600">'+fmt(leg.offer)+'</td>'
+      +'<td style="color:rgba(255,255,255,0.55)">'+fmt(mid)+'</td>'
       +'<td>'+srcTag+'</td>'
       +'<td>'+rmBtn+'</td>'
       +'</tr>';
