@@ -2619,6 +2619,7 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
               <div class="sc-board-hdr" onclick="scToggleCollapse()">
                 <span class="sc-board-title">Strip Calculator</span>
                 <div style="display:flex;gap:6px;align-items:center" onclick="event.stopPropagation()">
+                  <button class="sc-btn-sm" onclick="scTest()">Test</button>
                   <button class="sc-btn-sm" onclick="scClear()">Clear</button>
                   <span id="sc-collapse-arrow" style="font-size:10px;color:rgba(255,255,255,0.3);cursor:pointer;padding:0 4px;user-select:none" onclick="scToggleCollapse()">▲</span>
                 </div>
@@ -9715,6 +9716,23 @@ function scRenderLegs(){
 
 function scRender(){scRenderSvg();scRenderLegs();}
 window.addEventListener('resize',function(){if(typeof scRenderSvg==='function')scRenderSvg();});
+
+function scTest(){
+  // Inject sample prices into PCD and add two legs
+  var spot=PCD.spot||143.50;
+  function injectQ(t,bid,offer){
+    if(!PCD.quotes[t])PCD.quotes[t]={bids:[],offers:[]};
+    PCD.quotes[t].bids=[{price:bid,entries:[{bank:'TEST',amount:5,remaining:5}]}];
+    PCD.quotes[t].offers=[{price:offer,entries:[{bank:'TEST',amount:5,remaining:5}]}];
+  }
+  injectQ('2M', spot-0.780, spot-0.772); // 2M: FP -78.0/-77.2
+  injectQ('3M', spot-1.184, spot-1.178); // 3M: FP -118.4/-117.8
+  injectQ('5M', spot-1.920, spot-1.910); // 5M: FP -192.0/-191.0
+  SC.legs=[];SC.pending=null;
+  scAddLeg('3M','5M');
+  scAddLeg('2M','5M');
+  pcdRenderBoard();
+}
 
 function scExecuteAll(){
   var spot=PCD.spot||143.50;
