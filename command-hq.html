@@ -1740,6 +1740,9 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
 
 /* strip calculator */
 .sc-wrap { padding:10px 12px; }
+.sc-board-hdr { display:flex; align-items:center; justify-content:space-between; padding:5px 10px; background:rgba(0,168,255,0.04); border-bottom:1px solid rgba(0,168,255,0.1); cursor:pointer; user-select:none; }
+.sc-board-hdr:hover { background:rgba(0,168,255,0.07); }
+.sc-board-title { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(0,168,255,0.65); }
 .sc-info-bar { font-family:'IBM Plex Mono',monospace; font-size:9px; color:rgba(255,255,255,0.28); letter-spacing:0.06em; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; }
 .sc-chart-box { background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.06); border-radius:6px; margin-bottom:10px; overflow:hidden; }
 .sc-legs-tbl { width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:11px; margin-bottom:10px; }
@@ -2604,11 +2607,32 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
           <div class="pcd-tabs">
             <span id="pcd-stab-board" class="pcd-tab active" onclick="pcdSwitchSubTab('board')">Board</span>
             <span id="pcd-stab-trades" class="pcd-tab" onclick="pcdSwitchSubTab('trades')">Trades</span>
-            <span id="pcd-stab-strip" class="pcd-tab" onclick="pcdSwitchSubTab('strip')">Strip</span>
             <span id="pcd-stab-settings" class="pcd-tab" onclick="pcdSwitchSubTab('settings')">Settings</span>
           </div>
           <!-- Board panel -->
           <div id="pcd-panel-board" class="pcd-panel active">
+            <!-- Strip Calculator (always visible at top) -->
+            <div id="sc-board-wrap" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+              <div class="sc-board-hdr" onclick="scToggleCollapse()">
+                <span class="sc-board-title">Strip Calculator</span>
+                <div style="display:flex;gap:6px;align-items:center" onclick="event.stopPropagation()">
+                  <button class="sc-btn-sm" onclick="scClear()">Clear</button>
+                  <span id="sc-collapse-arrow" style="font-size:10px;color:rgba(255,255,255,0.3);cursor:pointer;padding:0 4px;user-select:none" onclick="scToggleCollapse()">▲</span>
+                </div>
+              </div>
+              <div id="sc-board-body">
+                <div class="sc-wrap" style="padding:6px 10px">
+                  <div class="sc-info-bar" style="margin-bottom:5px">
+                    <span>Click two tenors to define a fwd/fwd leg — prices live from board.</span>
+                  </div>
+                  <div class="sc-chart-box" style="margin-bottom:6px">
+                    <svg id="sc-svg" style="width:100%;height:130px;display:block"></svg>
+                  </div>
+                  <div id="sc-legs-wrap"></div>
+                  <div id="sc-exec-bar"></div>
+                </div>
+              </div>
+            </div>
             <div id="pcd-board"></div>
           </div>
           <!-- Trades panel -->
@@ -2625,20 +2649,6 @@ tr.near-spot { background:rgba(0,168,255,0.07) !important; }
                 <thead><tr><th>Time</th><th>Tenor</th><th>Bank</th><th>Cp</th><th>Side</th><th>Price</th><th>Amt</th><th>Spot</th><th>Basis</th></tr></thead>
                 <tbody id="pcd-trades-body"></tbody>
               </table>
-            </div>
-          </div>
-          <!-- Strip Calculator panel -->
-          <div id="pcd-panel-strip" class="pcd-panel">
-            <div class="sc-wrap">
-              <div class="sc-info-bar">
-                <span>Click a tenor to start a leg — click another to complete it. Prices live from PCD board.</span>
-                <button class="sc-btn-sm" onclick="scClear()">Clear All</button>
-              </div>
-              <div class="sc-chart-box">
-                <svg id="sc-svg" style="width:100%;height:150px;display:block"></svg>
-              </div>
-              <div id="sc-legs-wrap"></div>
-              <div id="sc-exec-bar"></div>
             </div>
           </div>
           <!-- Settings panel -->
@@ -8263,12 +8273,12 @@ function pcdRender(){
   if(t==='board')pcdRenderBoard();
   else if(t==='trades')pcdRenderTrades();
   else if(t==='settings')pcdRenderSettings();
-  else if(t==='strip')scRender();
 }
 function pcdSwitchSubTab(name){PCD.activeSubTab=name;pcdRender();}
 
 function pcdRenderBoard(){
   var el=document.getElementById('pcd-board');if(!el)return;
+  if(typeof scRender==='function')scRender();
   var live=PCD.spot;
   var h='';
   for(var ti=0;ti<PCD.tenors.length;ti++){
@@ -9470,7 +9480,14 @@ function brkSaveSettings(){
 
 
 // ── STRIP CALCULATOR ──────────────────────────────────────────────────────────
-var SC = { legs:[], pending:null };
+var SC = { legs:[], pending:null, collapsed:false };
+function scToggleCollapse(){
+  SC.collapsed=!SC.collapsed;
+  var body=document.getElementById('sc-board-body');
+  var arrow=document.getElementById('sc-collapse-arrow');
+  if(body)body.style.display=SC.collapsed?'none':'block';
+  if(arrow)arrow.textContent=SC.collapsed?'▼':'▲';
+}
 var SC_TENORS = ['1W','1M','2M','3M','4M','5M','6M','9M','12M','18M','2Y'];
 
 function scBestBid(tenor){
