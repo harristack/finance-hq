@@ -8279,7 +8279,7 @@ function pcdSwitchSubTab(name){PCD.activeSubTab=name;pcdRender();}
 
 function pcdRenderBoard(){
   var el=document.getElementById('pcd-board');if(!el)return;
-  if(typeof scRender==='function')scRender();
+  if(typeof scRender==='function')requestAnimationFrame(function(){scRender();});
   var live=PCD.spot;
   var h='';
   for(var ti=0;ti<PCD.tenors.length;ti++){
@@ -9529,7 +9529,7 @@ function scSolveChain(){
   function addImpl(near,far,bid,offer){
     if(near===far)return;
     var ni=TMAP[near],fi=TMAP[far];
-    if(ni>fi){var tmp=near;near=far;far=tmp;var tb=bid;bid=-offer;offer=-bid;}
+    if(ni>fi){var tmp=near;near=far;far=tmp;var tb=bid;bid=-offer;offer=-tb;}
     if(all.find(function(l){return l.near===near&&l.far===far;}))return;
     if(implied.find(function(l){return l.near===near&&l.far===far;}))return;
     implied.push({near:near,far:far,bid:bid,offer:offer,implied:true});
@@ -9584,8 +9584,9 @@ function scNodeClick(key){
 
 function scRenderSvg(){
   var svg=document.getElementById('sc-svg');if(!svg)return;
-  var W=svg.parentElement?svg.parentElement.clientWidth:400;
-  if(W<10)W=400;
+  var par=svg.parentElement;
+  var W=par?(par.clientWidth||par.offsetWidth||0):0;
+  if(W<50){setTimeout(scRenderSvg,80);return;}
   var H=180,nodeY=H-32,nodeR=17,pad=36;
   var N=SC_TENORS.length;
   var step=(W-pad*2)/(N-1);
@@ -9708,6 +9709,7 @@ function scRenderLegs(){
 }
 
 function scRender(){scRenderSvg();scRenderLegs();}
+window.addEventListener('resize',function(){if(typeof scRenderSvg==='function')scRenderSvg();});
 
 function scExecuteAll(){
   var spot=PCD.spot||143.50;
