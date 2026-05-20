@@ -9543,16 +9543,16 @@ function scSolveChain(){
         addImpl(a.near,b.far,iBid,iOff);
       }
       // Common far: a.far === b.far → implied a.near → b.near (difference)
+      // e.g. 2M×5M + 3M×5M → implied 2M×3M = 2M×5M − 3M×5M
       if(a.far===b.far&&a.near!==b.near){
-        var TMAP2=TMAP;
-        var iNear=TMAP2[a.near]<TMAP2[b.near]?a.near:b.near;
-        var iFar=TMAP2[a.near]<TMAP2[b.near]?b.near:a.near;
-        var legShort=TMAP2[a.near]<TMAP2[b.near]?a:b;
-        var legLong=TMAP2[a.near]<TMAP2[b.near]?b:a;
-        // long.bid - short.offer = implied bid; long.offer - short.bid = implied offer
-        var iBid2=(legLong.bid!=null&&legShort.offer!=null)?legLong.bid-legShort.offer:null;
-        var iOff2=(legLong.offer!=null&&legShort.bid!=null)?legLong.offer-legShort.bid:null;
-        addImpl(iNear,iFar,iBid2,iOff2);
+        var iNear2=TMAP[a.near]<TMAP[b.near]?a.near:b.near; // lower tenor
+        var iFar2=TMAP[a.near]<TMAP[b.near]?b.near:a.near;  // higher tenor
+        var legNS=a.near===iNear2?a:b; // leg from lower tenor to common far (longer span)
+        var legFS=a.near===iFar2?a:b;  // leg from higher tenor to common far (shorter span)
+        // implied bid = longer.bid - shorter.offer; implied offer = longer.offer - shorter.bid
+        var iBid2=(legNS.bid!=null&&legFS.offer!=null)?legNS.bid-legFS.offer:null;
+        var iOff2=(legNS.offer!=null&&legFS.bid!=null)?legNS.offer-legFS.bid:null;
+        addImpl(iNear2,iFar2,iBid2,iOff2);
       }
     });
   });
