@@ -9584,6 +9584,7 @@ function scNodeClick(key){
 
 function scRenderSvg(){
   var svg=document.getElementById('sc-svg');if(!svg)return;
+  if(SC.collapsed)return;
   var par=svg.parentElement;
   var W=par?(par.clientWidth||par.offsetWidth||0):0;
   if(W<50){setTimeout(scRenderSvg,80);return;}
@@ -9638,12 +9639,16 @@ function scRenderSvg(){
     var sw=isPend?3:inLeg?2:1.5;
     var textCol=isPend?'#fff':inLeg?'rgba(255,255,255,0.95)':inImpl?'rgba(251,191,36,0.85)':'rgba(255,255,255,0.45)';
     var fontSize=inLeg||isPend?'9.5':'9';
-    h+='<circle cx="'+p.x+'" cy="'+nodeY+'" r="'+nodeR+'" fill="'+nodeFill+'" stroke="'+nodeStr+'" stroke-width="'+sw+'" style="cursor:pointer;transition:all 0.1s" onclick="scNodeClick(\''+t+'\')" />';
-    h+='<text x="'+p.x+'" y="'+(nodeY+3.5)+'" text-anchor="middle" dominant-baseline="middle" font-family="IBM Plex Mono,monospace" font-size="'+fontSize+'" fill="'+textCol+'" font-weight="'+(inLeg||isPend?'700':'400')+'" style="pointer-events:none">'+t+'</text>';
+    h+='<circle cx="'+p.x+'" cy="'+nodeY+'" r="'+nodeR+'" fill="'+nodeFill+'" stroke="'+nodeStr+'" stroke-width="'+sw+'" style="cursor:pointer" data-sc-tenor="'+t+'"/>';
+    h+='<text x="'+p.x+'" y="'+(nodeY+3.5)+'" text-anchor="middle" dominant-baseline="middle" font-family="IBM Plex Mono,monospace" font-size="'+fontSize+'" fill="'+textCol+'" font-weight="'+(inLeg||isPend?'700':'400')+'" data-sc-tenor="'+t+'" style="cursor:pointer">'+t+'</text>';
   });
 
   svg.setAttribute('height',H);
   svg.innerHTML=h;
+  svg.onclick=function(e){
+    var t=e.target.getAttribute('data-sc-tenor');
+    if(t)scNodeClick(t);
+  };
 
   // Update status bar
   var st=document.getElementById('sc-status-bar');
